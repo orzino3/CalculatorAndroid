@@ -11,8 +11,11 @@ public class MainActivity extends AppCompatActivity {
 
     TextView textView;
     double num1 = 0;
+    double num2 = 0;
+    double result = 0;
     String operator = "";
     boolean isEqualClicked = false;
+    double lastSecondVal = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Button clickedButton = (Button) view;
 
         if(isEqualClicked){
+            clear(view);
             textView.setText(clickedButton.getText());
         }
         else {
@@ -49,8 +53,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void equal(View view){
-        double num2 = Integer.parseInt(textView.getText().toString());
-        double result = 0;
+        if(isEqualClicked){
+            num2 = lastSecondVal;
+        }
+
+        else{
+            num2 = Integer.parseInt(textView.getText().toString());
+            lastSecondVal = num2;
+        }
+
         isEqualClicked = true;
 
         switch (operator){
@@ -84,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             textView.setText(String.format("%.2f", result));
         }
+        num1 = result;
     }
 
 
