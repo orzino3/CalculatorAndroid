@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (result == (int) result) {
-            textView.setText(String.valueOf((int) result)); // הצגת שלם
+            textView.setText(String.valueOf((int) result));
         } else {
-            textView.setText(String.format("%.2f", result)); // הצגת תוצאה עם 2 ספרות אחרי הנקודה
+            textView.setText(String.format("%.2f", result));
         }
     }
 
