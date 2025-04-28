@@ -3,7 +3,6 @@ package com.example.myapp;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -14,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    final String ERROR_MESSAGE = "Error";
     TextView textView;
     double num1 = 0;
     double num2 = 0;
@@ -57,25 +56,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calc(View view) {
-        Button actionButton = (Button) view;
-        operator = actionButton.getText().toString();
 
-        num1 = Integer.parseInt(textView.getText().toString());
-        textView.setText("");
+            Button actionButton = (Button) view;
+            operator = actionButton.getText().toString();
+
+            if(!textView.getText().toString().isEmpty()){
+                num1 = Double.parseDouble(textView.getText().toString());
+            }
+            textView.setText("");
+
+
     }
 
     public void special(View view){
-        num1 = Integer.parseInt(textView.getText().toString());
-        result = Math.sqrt(num1);
-        printResult();
-        isEqualClicked = true;
+        if(!textView.getText().toString().isEmpty()){
+            num1 = Double.parseDouble(textView.getText().toString());
+            result = Math.sqrt(num1);
+            printResult();
+            isEqualClicked = true;
+        }
+
+    }
+
+
+    private String formatNumber(double num) {
+        if (num % 1 == 0) {
+            return String.valueOf((int) num);
+        } else {
+            return String.valueOf(num);
+        }
+    }
+
+
+    public String createEx(){
+
+        return formatNumber(num1) + operator + formatNumber(num2);
+
     }
 
     public void printResult(){
+        String text;
         if (result == (int) result) {
-            textView.setText(String.valueOf((int) result));
+            text = createEx()
+                    +"="+
+                    (int) result;
+            textView.setText(text);
         } else {
-            textView.setText(String.format("%.3f", result));
+            text = createEx()
+                    +"="
+                    +String.format("%.3f", result);
+            textView.setText(text);
         }
     }
 
@@ -86,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             else{
-                num2 = Integer.parseInt(textView.getText().toString());
+                num2 = Double.parseDouble(textView.getText().toString());
                 lastSecondVal = num2;
             }
 
@@ -112,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     else{
-                        textView.setText("Error");
+                        textView.setText(ERROR_MESSAGE);
                         return;
                     }
                     break;
@@ -134,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             printResult();
             num1 = result;
         }
-        else textView.setText("Error");
+        else textView.setText(ERROR_MESSAGE);
 
     }
 
@@ -145,6 +175,11 @@ public class MainActivity extends AppCompatActivity {
         if(!text.isEmpty()){
             text = text.substring(0,text.length()-1);
             textView.setText(text);
+        }
+
+        if(isEqualClicked){
+            clear(view);
+
         }
 
     }
