@@ -18,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
     double num1 = 0;
     double num2 = 0;
     double result = 0;
+    double lastSecondVal = 0;
     String operator = "";
     boolean isEqualClicked = false;
-    double lastSecondVal = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             textView.append(clickedButton.getText());
-
         }
     }
 
@@ -57,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void calc(View view) {
 
+        if(isEqualClicked) {
+            clear(view);
+        }
             Button actionButton = (Button) view;
             operator = actionButton.getText().toString();
 
@@ -64,18 +66,18 @@ public class MainActivity extends AppCompatActivity {
                 num1 = Double.parseDouble(textView.getText().toString());
             }
             textView.setText("");
-
-
     }
 
     public void special(View view){
-        if(!textView.getText().toString().isEmpty()){
-            num1 = Double.parseDouble(textView.getText().toString());
-            result = Math.sqrt(num1);
-            printResult();
-            isEqualClicked = true;
+        if(isEqualClicked) {
+            clear(view);
         }
-
+            if(!textView.getText().toString().isEmpty()){
+                num1 = Double.parseDouble(textView.getText().toString());
+                result = Math.sqrt(num1);
+                printResult();
+                isEqualClicked = true;
+            }
     }
 
 
@@ -86,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
             return String.valueOf(num);
         }
     }
-
 
     public String createEx(){
 
@@ -160,12 +161,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
             }
-
             printResult();
             num1 = result;
         }
         else textView.setText(ERROR_MESSAGE);
-
     }
 
 
@@ -179,8 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(isEqualClicked){
             clear(view);
-
         }
-
     }
 }
