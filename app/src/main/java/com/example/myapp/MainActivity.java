@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 public class MainActivity extends AppCompatActivity {
-    final String ERROR_MESSAGE = "Error";
+    final String ERROR_MESSAGE = "ERROR";
     TextView textView;
     double num1 = 0;
     double num2 = 0;
