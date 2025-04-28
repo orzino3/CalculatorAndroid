@@ -3,6 +3,7 @@ package com.example.myapp;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -63,51 +64,88 @@ public class MainActivity extends AppCompatActivity {
         textView.setText("");
     }
 
-    public void equal(View view){
-        if(isEqualClicked){
-            num2 = lastSecondVal;
-        }
-
-        else{
-            num2 = Integer.parseInt(textView.getText().toString());
-            lastSecondVal = num2;
-        }
-
+    public void special(View view){
+        num1 = Integer.parseInt(textView.getText().toString());
+        result = Math.sqrt(num1);
+        printResult();
         isEqualClicked = true;
+    }
 
-        switch (operator){
-            case "+":
-                result = num1 + num2;
-                break;
-            case "-":
-                result = num1 - num2;
-                break;
-            case "X":
-                result = num1 * num2;
-                break;
-            case "/":
-                if (num2 != 0){
-                    if(num1 % num2 != 0){
-                         result =  num1 / num2;
-                    }
-                    else{
-                        result = (int) (num1 / num2);
-                    }
-                }
-                else{
-                    textView.setText("Error");
-                    return;
-                }
-                break;
-        }
-
+    public void printResult(){
         if (result == (int) result) {
             textView.setText(String.valueOf((int) result));
         } else {
             textView.setText(String.format("%.3f", result));
         }
-        num1 = result;
+    }
+
+    public void equal(View view){
+        if(num1 != 0){
+            if(isEqualClicked){
+                num2 = lastSecondVal;
+            }
+
+            else{
+                num2 = Integer.parseInt(textView.getText().toString());
+                lastSecondVal = num2;
+            }
+
+            isEqualClicked = true;
+
+            switch (operator){
+                case "+":
+                    result = num1 + num2;
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    break;
+                case "X":
+                    result = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 != 0){
+                        if(num1 % num2 != 0){
+                            result =  num1 / num2;
+                        }
+                        else{
+                            result = (int) (num1 / num2);
+                        }
+                    }
+                    else{
+                        textView.setText("Error");
+                        return;
+                    }
+                    break;
+
+                case "xⁿ":
+                    result = Math.pow(num1,num2);
+                    break;
+
+                case "√x":
+                    result = Math.sqrt(num1);
+                    break;
+
+                case "%":
+                    result = num1 * (num2/100);
+                    break;
+
+            }
+
+            printResult();
+            num1 = result;
+        }
+        else textView.setText("Error");
+
     }
 
 
+    public void deleteChar(View view) {
+        String text = textView.getText().toString();
+
+        if(!text.isEmpty()){
+            text = text.substring(0,text.length()-1);
+            textView.setText(text);
+        }
+
+    }
 }
